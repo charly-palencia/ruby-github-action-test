@@ -32,9 +32,13 @@ jobs:
 
     - name: Run tests
       run: bundle exec rake
+
     - name: rubocop
       uses: reviewdog/action-rubocop@v2
       with:
         rubocop_version: gemfile
         rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile
         reporter: github-pr-review # Default is github-pr-check
+
+    - name: rubocop locally
+      run: bundle exec rubocop -F
