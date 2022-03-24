@@ -11,7 +11,7 @@ on:
   pull_request:
     type:
       - open
-    # branches: [ main ]
+  # branches: [ main ]
 
 jobs:
   run_validation:
@@ -38,6 +38,13 @@ jobs:
       with:
         rubocop_version: gemfile
         rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile
+        reporter: github-pr-review # Default is github-pr-check
+
+
+    - name: brakeman
+      uses: reviewdog/action-brakeman@v2
+      with:
+        brakeman_version: 4.8.2
         reporter: github-pr-review # Default is github-pr-check
 
     - name: rubocop locally
