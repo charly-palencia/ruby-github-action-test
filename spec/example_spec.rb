@@ -7,7 +7,7 @@ describe 'Example' do
   describe 'test' do
     it 'Return valid result' do
       example = Example.new
-      expect(example.sum(1, 2)).to be(5)
+      expect(example.sum(1, 2)).to be(3)
     end
   end
 end
