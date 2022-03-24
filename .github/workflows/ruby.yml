@@ -14,7 +14,8 @@ on:
     # branches: [ main ]
 
 jobs:
-  test:
+  run_validation:
+    name: "Run Rspec Linter and Misspell"
 
     runs-on: ubuntu-latest
     strategy:
@@ -28,7 +29,18 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true
+
     - name: Run tests
       run: bundle exec rake
-    - name: Run rubocop
-      run: bundle exec rubocop
+    - name: rubocop
+      uses: reviewdog/action-rubocop@v2
+      with:
+        rubocop_version: gemfile
+        rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile
+        reporter: github-pr-review # Default is github-pr-check
+
+    - name: misspell
+      uses: reviewdog/action-misspell@v1
+      with:
+        github_token: ${{ secrets.github_token }}
+        locale: "US"
